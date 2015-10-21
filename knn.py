@@ -9,6 +9,7 @@ from sklearn.decomposition import PCA
 data=pd.read_csv('train.csv')
 data1=data.values
 X=data1[:,1:]
+y=data1[:,:1]
 y=np.ravel(y)
 Xtrain,Xtest,ytrain,ytest=train_test_split(X,y,test_size=0.25)
 
@@ -19,8 +20,26 @@ Xtest_reduced=pca.transform(Xtest)
 knn=KNeighborsClassifier(n_neighbors=5,weights='distance',p=3) 
 knn.fit(Xtrain_reduced,ytrain)
 pred=knn.predict(Xtest_reduced)
+
 print("Classification report for classifier %s:\n%s\n"
       % (knn, metrics.classification_report(ytest,pred)))
+Classification report for classifier KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_neighbors=5, p=3, weights='distance'):
+             precision    recall  f1-score   support
+
+          0       0.98      0.99      0.99      1008
+          1       0.97      0.99      0.98      1110
+          2       0.98      0.97      0.98      1055
+          3       0.97      0.96      0.96      1128
+          4       0.98      0.97      0.98      1068
+          5       0.97      0.97      0.97       950
+          6       0.98      0.99      0.98      1025
+          7       0.97      0.97      0.97      1096
+          8       0.98      0.94      0.96      1017
+          9       0.95      0.97      0.96      1043
+
+avg / total       0.97      0.97      0.97     10500
+
 
 #Run prediction on test data and make submissions
 test=pd.read_csv('test.csv')
