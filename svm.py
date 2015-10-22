@@ -10,7 +10,7 @@ data1=data.values
 X=data1[:,1:]
 y=data1[:,:1]
 y=np.ravel(y)
-Xtrain,Xtest,ytrain,ytest=train_test_split(X,y,test_size=0.25)
+Xtrain,Xtest,ytrain,ytest=train_test_split(X,y,test_size=0.5)
 
 #Run linear kernel first
 svmL1=svm.SVC(kernel='linear',C=0.01)
@@ -18,6 +18,23 @@ svmL1.fit(Xtrain,ytrain)
 predL1=svmL1.predict(Xtest) 
 print("Classification report for classifier %s:\n%s\n"
       % (svmL1, metrics.classification_report(ytest,predL1)))
+Classification report for classifier SVC(C=0.01, cache_size=200, class_weight=None, coef0=0.0, degree=3, gamma=0.0,
+  kernel='linear', max_iter=-1, probability=False, random_state=None,
+  shrinking=True, tol=0.001, verbose=False):
+             precision    recall  f1-score   support
+
+          0       0.95      0.97      0.96      2101
+          1       0.95      0.98      0.96      2386
+          2       0.89      0.91      0.90      2092
+          3       0.85      0.89      0.87      2126
+          4       0.89      0.93      0.91      2007
+          5       0.87      0.87      0.87      1881
+          6       0.96      0.94      0.95      2116
+          7       0.93      0.91      0.92      2202
+          8       0.92      0.83      0.87      2018
+          9       0.89      0.86      0.87      2071
+
+avg / total       0.91      0.91      0.91     21000
 
 #Run gaussian kernel but the result is poor and running time is long
 svmR1=svm.SVC(kernel='rbf',gamma=0.001, C=10000)
@@ -32,6 +49,23 @@ svmP1.fit(Xtrain,ytrain)
 predP1=svmP1.predict(Xtest)
 print("Classification report for classifier %s:\n%s\n"
       % (svmP1, metrics.classification_report(ytest,predP1)))
+Classification report for classifier SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, degree=3, gamma=0.0,
+  kernel='poly', max_iter=-1, probability=False, random_state=None,
+  shrinking=True, tol=0.001, verbose=False):
+             precision    recall  f1-score   support
+
+          0       0.97      0.98      0.98      2101
+          1       0.97      0.99      0.98      2386
+          2       0.97      0.96      0.96      2092
+          3       0.96      0.96      0.96      2126
+          4       0.97      0.97      0.97      2007
+          5       0.96      0.96      0.96      1881
+          6       0.98      0.97      0.98      2116
+          7       0.98      0.97      0.97      2202
+          8       0.97      0.96      0.96      2018
+          9       0.97      0.95      0.96      2071
+
+avg / total       0.97      0.97      0.97     21000
 
 #Run kfold cross-validation to check cost parameters for polynomial kernel
 precision=[]
