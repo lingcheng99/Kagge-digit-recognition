@@ -102,7 +102,19 @@ for crange in Crange:
         ypred=svm1.predict(Xtest)
         precision.append(metrics.precision_score(ytest,ypred))
     cprecision.append(np.mean(precision))
+In [15]:
 
+cprecision
+Out[15]:
+[0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694,
+ 0.97319469768395694]
 
 
 #Use polynomial degree=3 for final model and submission
