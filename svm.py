@@ -36,12 +36,32 @@ Classification report for classifier SVC(C=0.01, cache_size=200, class_weight=No
 
 avg / total       0.91      0.91      0.91     21000
 
+
 #Run gaussian kernel but the result is poor and running time is long
 svmR1=svm.SVC(kernel='rbf',gamma=0.001, C=10000)
 svmR1.fit(Xtrain,ytrain)
 predR1=svmR1.predict(Xtest)
 print("Classification report for classifier %s:\n%s\n"
       % (svmR1, metrics.classification_report(ytest,predR1)))
+Classification report for classifier SVC(C=10000, cache_size=200, class_weight=None, coef0=0.0, degree=3,
+  gamma=0.001, kernel='rbf', max_iter=-1, probability=False,
+  random_state=None, shrinking=True, tol=0.001, verbose=False):
+             precision    recall  f1-score   support
+
+          0       0.00      0.00      0.00      2101
+          1       0.11      1.00      0.20      2386
+          2       0.00      0.00      0.00      2092
+          3       0.00      0.00      0.00      2126
+          4       0.00      0.00      0.00      2007
+          5       0.00      0.00      0.00      1881
+          6       0.00      0.00      0.00      2116
+          7       0.00      0.00      0.00      2202
+          8       0.00      0.00      0.00      2018
+          9       0.00      0.00      0.00      2071
+
+avg / total       0.01      0.11      0.02     21000
+
+
 
 #Run polynomial kernel
 svmP1=svm.SVC(kernel='poly',degree=3)
@@ -66,6 +86,7 @@ Classification report for classifier SVC(C=1.0, cache_size=200, class_weight=Non
           9       0.97      0.95      0.96      2071
 
 avg / total       0.97      0.97      0.97     21000
+
 
 #Run kfold cross-validation to check cost parameters for polynomial kernel
 precision=[]
