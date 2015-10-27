@@ -20,4 +20,5 @@ It is important to use PCA to increase running speed. Again use train_test_split
 
 Use LinearSVC first, with various C values, and the precision score is around 0.90
 Use RBF kernels next. For some reason, the running time is extremely long and the result is poor.
-Use polynomial kernels and get good scores with degree=2 or 3. Use kfold cross validation and choose svm.SVC(kernel='poly',degree=3). The score is 0.97543, slight improvement over KNN.
+Use polynomial kernels and get good scores around 0.97. Use GridSearchCV and choose 
+svm.SVC(kernel='poly',degree=2). The score is 0.97543, slight improvement over KNN.
