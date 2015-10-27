@@ -88,37 +88,20 @@ Classification report for classifier SVC(C=1.0, cache_size=200, class_weight=Non
 avg / total       0.97      0.97      0.97     21000
 
 
-#Run kfold cross-validation to check cost parameters for polynomial kernel
-precision=[]
-cprecision=[]
-Crange=np.logspace(-6,2,9)
-for crange in Crange:
-    kfold1=cross_validation.KFold(42000,n_folds=4)
-    precision=[]
-    for train,test in kfold1:
-        Xtrain,Xtest,ytrain,ytest=X[train],X[test],y[train],y[test]
-        svm1=svm.SVC(kernel='poly',degree=3,C=crange)
-        svm1.fit(Xtrain,ytrain)
-        ypred=svm1.predict(Xtest)
-        precision.append(metrics.precision_score(ytest,ypred))
-    cprecision.append(np.mean(precision))
-In [15]:
+#Use GridSearchCV to tune parameters
+from sklearn.grid_search import GridSearchCV
+parameters1={'kernel':['poly'],'degree':[2,3,4]}
+clf1=GridSearchCV(svm.SVC(),parameters1,cv=5,scoring='precision')
+clf1.fit(Xtrain,ytrain)
+clf1.grid_scores_
 
-cprecision
-Out[15]:
-[0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694,
- 0.97319469768395694]
+Out[13]:
+[mean: 0.96890, std: 0.00264, params: {'kernel': 'poly', 'degree': 2},
+ mean: 0.96567, std: 0.00233, params: {'kernel': 'poly', 'degree': 3},
+ mean: 0.95507, std: 0.00210, params: {'kernel': 'poly', 'degree': 4}]
 
-
-#Use polynomial degree=3 for final model and submission
-svm1=svm.SVC(kernel='poly',degree=3)
+#Use polynomial degree=2 for final model and submission
+svm1=svm.SVC(kernel='poly',degree=2)
 svm1.fit(X,y)
 test=pd.read_csv('test.csv')
 pred=svm1.predict(test)
