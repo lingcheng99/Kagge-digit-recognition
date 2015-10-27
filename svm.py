@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn import metrics,cross_validation
+from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import train_test_split
 from sklearn import svm
 
@@ -35,6 +36,19 @@ Classification report for classifier SVC(C=0.01, cache_size=200, class_weight=No
           9       0.89      0.86      0.87      2071
 
 avg / total       0.91      0.91      0.91     21000
+
+#Use GridSearchCV to tune parameters.C=1e-06 gave the best result.
+parameters3={'kernel':['linear'],'C': [1e-06, 0.0001, 0.01, 1, 100]}
+clf3=GridSearchCV(svm.SVC(),parameters3,cv=5,scoring='precision')
+clf3.fit(Xtrain,ytrain)
+clf3.grid_scores_
+
+Out[17]:
+[mean: 0.93872, std: 0.00203, params: {'kernel': 'linear', 'C': 1e-06},
+ mean: 0.91670, std: 0.00370, params: {'kernel': 'linear', 'C': 0.0001},
+ mean: 0.91276, std: 0.00306, params: {'kernel': 'linear', 'C': 0.01},
+ mean: 0.91276, std: 0.00306, params: {'kernel': 'linear', 'C': 1},
+ mean: 0.91276, std: 0.00306, params: {'kernel': 'linear', 'C': 100}]
 
 
 #Run gaussian kernel but the result is poor and running time is long
@@ -88,8 +102,7 @@ Classification report for classifier SVC(C=1.0, cache_size=200, class_weight=Non
 avg / total       0.97      0.97      0.97     21000
 
 
-#Use GridSearchCV to tune parameters
-from sklearn.grid_search import GridSearchCV
+#Use GridSearchCV to tune parameters.Degree=2 gave the best result.
 parameters1={'kernel':['poly'],'degree':[2,3,4]}
 clf1=GridSearchCV(svm.SVC(),parameters1,cv=5,scoring='precision')
 clf1.fit(Xtrain,ytrain)
